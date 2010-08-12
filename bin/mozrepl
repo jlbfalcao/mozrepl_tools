@@ -1,0 +1,16 @@
+
+if ARGV[0] == 'textmate'
+    puts "textmate plugin ok!"
+    textmate = File.expand_path("~/Library/Application Support/TextMate/Bundles/MozRepl.tmbundle")
+    
+    basedir = File.join(File.dirname(File.dirname(__FILE__)))
+
+    bundle = File.join basedir, 'lib', 'textmate'
+    
+    File.unlink(textmate)
+    File.symlink(bundle, textmate)
+    system %Q{osascript -e 'tell app "TextMate" to reload bundles'}
+    exit
+end
+
+require 'mozrepl_tools'

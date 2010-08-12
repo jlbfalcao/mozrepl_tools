@@ -5,12 +5,13 @@ begin
   require 'jeweler'
   Jeweler::Tasks.new do |gem|
     gem.name = "mozrepl_tools"
-    gem.summary = %Q{TODO: one-line summary of your gem}
-    gem.description = %Q{TODO: longer description of your gem}
+    gem.summary = %Q{Some mozrepl tools}
+    gem.description = %Q{}
+    gem.files = FileList['lib/**/*']
     gem.email = "jlbfalcao@gmail.com"
     gem.homepage = "http://github.com/jlbfalcao/mozrepl_tools"
     gem.authors = ["Jorge Falcão"]
-    gem.add_development_dependency "thoughtbot-shoulda", ">= 0"
+    # gem.add_development_dependency "watchr", ">= 0"
     # gem is a Gem::Specification... see http://www.rubygems.org/read/chapter/20 for additional settings
   end
   Jeweler::GemcutterTasks.new
