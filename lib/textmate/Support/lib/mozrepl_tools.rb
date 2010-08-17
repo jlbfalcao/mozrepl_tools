@@ -18,7 +18,8 @@ filename = File.expand_path filepath
 # p ext
 s.puts(script)
 
-if ext == ".css"
+if ext == ".css" || ext == ".scss"
+  file = file.split(".")[0] + ".css"
   s.puts("reload.css('#{file}')")
   puts "reloaded #{file}"
 elsif ext == ".js"
