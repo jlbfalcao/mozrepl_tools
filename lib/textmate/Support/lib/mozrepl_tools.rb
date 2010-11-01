@@ -6,16 +6,11 @@ s = TCPSocket.open('localhost', 4242)
 
 script = DATA.read
 
-
-# print "asdad'asdasda"
-# print "aa\"aa"
-# print "aa\"aa".gsub(/["]/, '\"')
-
 filepath = ENV["TM_FILEPATH"] || ARGV[0]
 file =  File.basename filepath
 ext = File.extname filepath
 filename = File.expand_path filepath
-# p ext
+
 s.puts(script)
 
 if ext == ".css" || ext == ".scss"
@@ -23,18 +18,9 @@ if ext == ".css" || ext == ".scss"
   s.puts("reload.css('#{file}')")
   puts "reloaded #{file}"
 elsif ext == ".js"
-  # content = (IO.readlines(filename).map do |l|
-  #   "\"" + l.gsub(/[']/, '\\\\\'').gsub(/["]/, '\"').chop() +  " \\n \"" + " + \n"
-  # end).join("")
-  # content += '""'
-  # puts contenttoutf8 → string
-  
-  # puts content
   s.puts("reload.js('#{filename}')")
   puts "reloaded #{filename}"
 end
-
-# puts script
 
 # workaround
 sleep 1
@@ -72,8 +58,6 @@ var reload = (function(content, window) {
     }
   }
 
-
-
   var document = doc = window.document;
   var Ext = window.Ext;
   
@@ -81,31 +65,6 @@ var reload = (function(content, window) {
   var console = window.console || {debug:function(){}};
 
   console.debug("loading...");
-  
-  // add development Ext.reg
-  if ( ! Ext._reg ) {
-    console.debug('saving original Ext.reg');
-    Ext._reg = Ext.reg;
-  }  
-
-  Ext.reg = function(xtype) {
-    console.debug("Ext.reg:", arguments);
-    // calling old Ext.reg
-    Ext._reg.apply(Ext, arguments);
-    
-    // reinstance all xtypes
-    var items = Ext.ComponentMgr.all.filterBy(function(e) { return e.getXType() == xtype }).each(function(item) {
-        repl.print(item)
-        var ic = item.initialConfig;
-        var o = item.ownerCt;
-        o.remove(item);
-        var it = o.add(ic)
-        if ( o.getLayout().setActiveItem ) {
-          o.getLayout().setActiveItem(it);
-        };
-        o.doLayout();
-    });
-  };
 
   var head = document.getElementsByTagName("head")[0];
 

@@ -19,7 +19,9 @@ gem install mozrepl_tools
 
 #> mozrepl 'my/path/file.js'
 
-It's works with Sencha(ExtJS) Components!!!
+== Use with Sencha|ExtJS.
+
+Just ext-reload.js to your project. 
 
 == Using with Textmate (~/Library/Application Support/TextMate/Bundles/MozRepl.tmbundle)
 
