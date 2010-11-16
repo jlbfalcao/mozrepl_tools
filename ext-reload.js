@@ -19,13 +19,15 @@ Ext.reg = Ext.reg.createSequence(function(xtype) {
                 o.remove(item);
 
                 //add it again
-                var it = o.add(Ext.apply({xtype: xtype}, ic));
+				var it = o.add(Ext.apply({xtype: xtype}, ic));
 
-                //TODO: test if it was indeed active
+				//TODO: handle border layout
+                TODO: test if it was indeed active
                 if ( it && o.getLayout().setActiveItem ) {
                     o.getLayout().setActiveItem(it);
                 };
-                o.doLayout();
+                //it.doLayout();
+				o.doLayout();
             }
         });
 });

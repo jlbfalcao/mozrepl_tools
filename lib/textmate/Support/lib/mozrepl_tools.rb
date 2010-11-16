@@ -39,25 +39,6 @@ var reload = (function(content, window) {
     }
   })();
   
-  // TODO: refactory
-  function found_script(a,s) {
-    var t = s.split("?");
-    var pu = t[0].split("/").reverse();
-    var pc = a.split("/").reverse();
-    var c = 0;
-    for ( var i = 0; i < pu.length; i++ ) {
-      if ( pu[i] == pc [i] ) {
-        c++;
-      } else {
-        break;
-      }
-    }
-    repl.print(c)
-    if ( c > 0 ) {
-      return s + ((t[1])?"&":"?") + Math.random();
-    }
-  }
-
   var document = doc = window.document;
   var Ext = window.Ext;
   
@@ -91,25 +72,19 @@ var reload = (function(content, window) {
       head.appendChild(script);
     },
     js:function(filename) {
-      var scripts = document.getElementsByTagName("script");
-      for (var i = 0; i < scripts.length; i++ ) {
-        repl.print(scripts[i].src);
-        if ( scripts[i].src ) {
-          var s = found_script(filename, scripts[i].src)
-          repl.print(filename);
-          repl.print("s:", s);
-          if ( s ) {
-            var script  = document.createElement('script');
-            script.type = "text/javascript";
-            script.src  = s;
-            repl.print(filename);
-            head.appendChild(script);
-            return;
-            
-          }
-        }
+      var filename = filename.split("/").pop();
+      // console.debug("filename:", filename);
+      // TODO: sometimes cant't work.'
+      var xpath = '//script[contains(@src, "'+ filename +'")]';
+      var node = document.evaluate(xpath, document, null, XPathResult.ANY_TYPE, null).iterateNext()
+      if ( node ) {
+        var newScript = document.createElement('script');
+        newScript.src = node.src.split("?")[0] + "?" + Math.random();
+        document.getElementsByTagName('head')[0].appendChild(newScript);
+        console.debug("reloaded")
+      } else {
+        console.debug("this file isn't included.'")
       }
-      
     }
   };
 })(content, window);
